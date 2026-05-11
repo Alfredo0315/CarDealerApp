@@ -1,0 +1,266 @@
+﻿<Window x:Class="CarDealerApp.Views.CarEditWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Автомобиль"
+        Height="680" Width="480"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanResize"
+        MinHeight="580" MinWidth="420"
+        Background="#D1EEFC">
+
+    <Window.Resources>
+        <Style x:Key="FieldLabel" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#5A6A8A"/>
+            <Setter Property="Margin" Value="0,0,0,3"/>
+        </Style>
+        <Style x:Key="InputBox" TargetType="TextBox">
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Padding" Value="8,0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="#FFFCD6"/>
+            <Setter Property="BorderBrush" Value="#B5D5CA"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+    </Window.Resources>
+
+    <Border Background="White" CornerRadius="12"
+            BorderBrush="#B5D5CA" BorderThickness="1"
+            Margin="16">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Синяя шапка -->
+            <Border Grid.Row="0" Background="#B5D5CA"
+                    CornerRadius="12,12,0,0"
+                    Padding="20,14">
+                <TextBlock x:Name="txtTitle"
+                           Text="Добавление автомобиля"
+                           FontSize="16" FontWeight="Bold"
+                           Foreground="#1A3A28"/>
+            </Border>
+
+            <!-- Тело с прокруткой -->
+            <ScrollViewer Grid.Row="1"
+                          VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Disabled"
+                          MaxHeight="560">
+                <StackPanel Margin="20,16,20,20">
+
+                <!-- Ряд 1: Марка + Модель -->
+                <Grid Margin="0,0,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="12"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="МАРКА" Style="{StaticResource FieldLabel}"/>
+                        <TextBox x:Name="txtMark" Style="{StaticResource InputBox}"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="МОДЕЛЬ" Style="{StaticResource FieldLabel}"/>
+                        <TextBox x:Name="txtModel" Style="{StaticResource InputBox}"/>
+                    </StackPanel>
+                </Grid>
+
+                <!-- Ряд 2: Цвет + Год -->
+                <Grid Margin="0,0,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="12"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="ЦВЕТ" Style="{StaticResource FieldLabel}"/>
+                        <TextBox x:Name="txtColor" Style="{StaticResource InputBox}"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="ГОД ВЫПУСКА" Style="{StaticResource FieldLabel}"/>
+                        <TextBox x:Name="txtYear" Style="{StaticResource InputBox}"/>
+                    </StackPanel>
+                </Grid>
+
+                <!-- Цена -->
+                <TextBlock Text="ЦЕНА (₽)" Style="{StaticResource FieldLabel}"/>
+                <TextBox x:Name="txtPrice" Style="{StaticResource InputBox}" Margin="0,0,0,10"/>
+
+                <!-- Тех. характеристики -->
+                <TextBlock Text="ТЕХ. ХАРАКТЕРИСТИКИ" Style="{StaticResource FieldLabel}"/>
+                <TextBox x:Name="txtTech"
+                         Height="56"
+                         FontSize="13"
+                         Padding="8,6"
+                         Background="#FFFCD6"
+                         BorderBrush="#B5D5CA"
+                         BorderThickness="1"
+                         TextWrapping="Wrap"
+                         AcceptsReturn="True"
+                         VerticalScrollBarVisibility="Auto"
+                         Margin="0,0,0,12"/>
+
+                <!-- Блок фото — виден только Admin и Employee -->
+                <StackPanel x:Name="photoPanel" Visibility="Collapsed" Margin="0,0,0,12">
+                    <TextBlock Text="ФОТО АВТОМОБИЛЯ" Style="{StaticResource FieldLabel}"/>
+
+                    <!-- Превью фото: соотношение 4:3 -->
+                    <Border x:Name="photoBorder"
+                            Height="220"
+                            CornerRadius="8"
+                            BorderBrush="#B5D5CA"
+                            BorderThickness="1"
+                            Background="#FFFCD6"
+                            Margin="0,0,0,8"
+                            ClipToBounds="True">
+                        <Grid>
+                            <!-- Заглушка когда фото нет -->
+                            <StackPanel x:Name="photoPlaceholder"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center">
+                                <TextBlock Text="🚗"
+                                           FontSize="36"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Text="Фото не выбрано"
+                                           FontSize="12"
+                                           Foreground="#AABBCC"
+                                           HorizontalAlignment="Center"
+                                           Margin="0,6,0,0"/>
+                            </StackPanel>
+
+                            <!-- Само фото -->
+                            <Image x:Name="imgPreview"
+                                   Stretch="Uniform"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"
+                                   Visibility="Collapsed"/>
+                        </Grid>
+                    </Border>
+
+                    <!-- Кнопки управления фото -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="8"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Выбрать фото -->
+                        <Button Grid.Column="0"
+                                x:Name="btnChoosePhoto"
+                                Content="📁  Выбрать фото"
+                                Height="32"
+                                FontSize="12" FontWeight="SemiBold"
+                                Foreground="#1A3A28"
+                                Background="#D1EEFC"
+                                BorderThickness="0"
+                                Cursor="Hand"
+                                Click="btnChoosePhoto_Click">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="bd" Background="{TemplateBinding Background}" CornerRadius="7">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="bd" Property="Background" Value="#B5D5CA"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+
+                        <!-- Удалить фото -->
+                        <Button Grid.Column="2"
+                                x:Name="btnClearPhoto"
+                                Content="✕"
+                                Height="32"
+                                Width="32"
+                                FontSize="14"
+                                Foreground="#712B13"
+                                Background="#F5C4B3"
+                                BorderThickness="0"
+                                Cursor="Hand"
+                                Visibility="Collapsed"
+                                Click="btnClearPhoto_Click">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="bd" Background="{TemplateBinding Background}" CornerRadius="7">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="bd" Property="Background" Value="#E0A898"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </Grid>
+                </StackPanel>
+
+                <!-- Кнопки Отмена/Сохранить -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0"
+                            x:Name="btnCancel"
+                            Content="Отмена"
+                            Height="36"
+                            FontSize="13" FontWeight="SemiBold"
+                            Foreground="#712B13"
+                            Background="#F5C4B3"
+                            BorderThickness="0"
+                            Cursor="Hand"
+                            Click="btnCancel_Click">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border x:Name="bd" Background="{TemplateBinding Background}" CornerRadius="8">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bd" Property="Background" Value="#E0A898"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Grid.Column="2"
+                            x:Name="btnSave"
+                            Content="Сохранить"
+                            Height="36"
+                            FontSize="13" FontWeight="SemiBold"
+                            Foreground="#1A3A28"
+                            Background="#B5D5CA"
+                            BorderThickness="0"
+                            Cursor="Hand"
+                            Click="btnSave_Click">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border x:Name="bd" Background="{TemplateBinding Background}" CornerRadius="8">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bd" Property="Background" Value="#8FB8A8"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </Grid>
+            </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </Border>
+</Window>
