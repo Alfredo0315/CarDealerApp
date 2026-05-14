@@ -8,7 +8,6 @@ public class Order
     public DateTime Date_of_execution { get; set; }
     public string Payment_method { get; set; } = string.Empty;
 
-    // Навигационные свойства
     public string? ClientName { get; set; }
     public string? CarInfo { get; set; }
 }

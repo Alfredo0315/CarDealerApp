@@ -4,46 +4,74 @@ using CarDealerApp.Services;
 
 namespace CarDealerApp.Views
 {
-    //авторизации пользователя
     public partial class LoginWindow : Window
     {
         private readonly DatabaseService _dbService;
+        private bool _showPassword = false;
 
         public LoginWindow()
         {
             InitializeComponent();
             _dbService = new DatabaseService();
         }
-        
-        //обработка нажатия кнопки "Войти"
-        private void btnLogin_Click(object sender, RoutedEventArgs e)
+
+        private void btnShowPassword_Click(object sender, RoutedEventArgs e)
         {
-            var login = txtLogin.Text.Trim();
-            var password = txtPassword.Password;
+            _showPassword = !_showPassword;
 
-            if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
+            if (_showPassword)
             {
-                ShowError("Введите логин и пароль!");
-                return;
-            }
-
-            if (_dbService.Authenticate(login, password, out var role))
-            {
-                CurrentUser.Login = login;
-                CurrentUser.Role = role;
-
-                // открытие главного меню
-                var mainWindow = new MainWindow();
-                mainWindow.Show();
-                this.Close();
+   
+                txtPasswordVisible.Text = txtPassword.Password;
+                txtPassword.Visibility        = Visibility.Collapsed;
+                txtPasswordVisible.Visibility = Visibility.Visible;
+                eyeIcon.Foreground = new System.Windows.Media.SolidColorBrush(
+                    System.Windows.Media.Color.FromRgb(26, 58, 40));
+                txtPasswordVisible.Focus();
+                txtPasswordVisible.CaretIndex = txtPasswordVisible.Text.Length;
             }
             else
             {
-                ShowError("Неверный логин или пароль!");
+ 
+                txtPassword.Password          = txtPasswordVisible.Text;
+                txtPasswordVisible.Visibility = Visibility.Collapsed;
+                txtPassword.Visibility        = Visibility.Visible;
+                eyeIcon.Foreground = new System.Windows.Media.SolidColorBrush(
+                    System.Windows.Media.Color.FromRgb(138, 154, 187));
+                txtPassword.Focus();
             }
         }
-        
-        //открытие окна регистрации
+
+        private void btnLogin_Click(object sender, RoutedEventArgs e)
+        {
+            var email = txtLogin.Text.Trim();
+    
+            var password = _showPassword ? txtPasswordVisible.Text : txtPassword.Password;
+
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+            {
+                ShowError("Введите email и пароль!");
+                return;
+            }
+
+            var result = _dbService.Authenticate(email, password);
+
+            if (result == null)
+            {
+                ShowError("Неверный email или пароль!");
+                return;
+            }
+
+            CurrentUser.Email      = email;
+            CurrentUser.Role       = result.Role;
+            CurrentUser.ClientId   = result.ClientId;
+            CurrentUser.EmployeeId = result.EmployeeId;
+
+            var mainWindow = new MainWindow();
+            mainWindow.Show();
+            this.Close();
+        }
+
         private void btnRegister_Click(object sender, RoutedEventArgs e)
         {
             var regWindow = new RegisterWindow();
@@ -52,7 +80,7 @@ namespace CarDealerApp.Views
 
         private void ShowError(string message)
         {
-            txtError.Text = message;
+            txtError.Text       = message;
             txtError.Visibility = Visibility.Visible;
         }
     }

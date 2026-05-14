@@ -35,7 +35,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <!-- Синяя шапка -->
+            
             <Border Grid.Row="0" Background="#B5D5CA"
                     CornerRadius="12,12,0,0"
                     Padding="20,14">
@@ -45,14 +45,14 @@
                            Foreground="#1A3A28"/>
             </Border>
 
-            <!-- Тело с прокруткой -->
+            
             <ScrollViewer Grid.Row="1"
                           VerticalScrollBarVisibility="Auto"
                           HorizontalScrollBarVisibility="Disabled"
                           MaxHeight="560">
                 <StackPanel Margin="20,16,20,20">
 
-                <!-- Ряд 1: Марка + Модель -->
+                
                 <Grid Margin="0,0,0,10">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -69,7 +69,7 @@
                     </StackPanel>
                 </Grid>
 
-                <!-- Ряд 2: Цвет + Год -->
+                
                 <Grid Margin="0,0,0,10">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -86,11 +86,11 @@
                     </StackPanel>
                 </Grid>
 
-                <!-- Цена -->
+               
                 <TextBlock Text="ЦЕНА (₽)" Style="{StaticResource FieldLabel}"/>
                 <TextBox x:Name="txtPrice" Style="{StaticResource InputBox}" Margin="0,0,0,10"/>
 
-                <!-- Тех. характеристики -->
+                
                 <TextBlock Text="ТЕХ. ХАРАКТЕРИСТИКИ" Style="{StaticResource FieldLabel}"/>
                 <TextBox x:Name="txtTech"
                          Height="56"
@@ -104,11 +104,11 @@
                          VerticalScrollBarVisibility="Auto"
                          Margin="0,0,0,12"/>
 
-                <!-- Блок фото — виден только Admin и Employee -->
+                
                 <StackPanel x:Name="photoPanel" Visibility="Collapsed" Margin="0,0,0,12">
                     <TextBlock Text="ФОТО АВТОМОБИЛЯ" Style="{StaticResource FieldLabel}"/>
 
-                    <!-- Превью фото: соотношение 4:3 -->
+                   
                     <Border x:Name="photoBorder"
                             Height="220"
                             CornerRadius="8"
@@ -118,7 +118,7 @@
                             Margin="0,0,0,8"
                             ClipToBounds="True">
                         <Grid>
-                            <!-- Заглушка когда фото нет -->
+                            
                             <StackPanel x:Name="photoPlaceholder"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center">
@@ -132,7 +132,7 @@
                                            Margin="0,6,0,0"/>
                             </StackPanel>
 
-                            <!-- Само фото -->
+                           
                             <Image x:Name="imgPreview"
                                    Stretch="Uniform"
                                    VerticalAlignment="Center"
@@ -141,7 +141,7 @@
                         </Grid>
                     </Border>
 
-                    <!-- Кнопки управления фото -->
+                   
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -149,7 +149,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <!-- Выбрать фото -->
+                       
                         <Button Grid.Column="0"
                                 x:Name="btnChoosePhoto"
                                 Content="📁  Выбрать фото"
@@ -174,7 +174,7 @@
                             </Button.Template>
                         </Button>
 
-                        <!-- Удалить фото -->
+                        
                         <Button Grid.Column="2"
                                 x:Name="btnClearPhoto"
                                 Content="✕"
@@ -202,8 +202,7 @@
                         </Button>
                     </Grid>
                 </StackPanel>
-
-                <!-- Кнопки Отмена/Сохранить -->
+                
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>

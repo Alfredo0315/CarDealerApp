@@ -10,6 +10,7 @@ public class Client
     public string Passport_number { get; set; } = string.Empty;
     public string Phone_number { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
+    public string? PasswordHash          { get; set; }
     public int? ID_User { get; set; }
     public string FullName => $"{Surname} {Name} {Middle_name}".Trim();
 }

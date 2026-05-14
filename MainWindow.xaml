@@ -9,7 +9,7 @@
 
     <Window.Resources>
 
-        <!-- Кнопка бокового меню -->
+
         <Style x:Key="MenuButtonStyle" TargetType="Button">
             <Setter Property="Height" Value="40"/>
             <Setter Property="FontSize" Value="13"/>
@@ -39,7 +39,7 @@
             </Setter>
         </Style>
 
-        <!-- Кнопки действий -->
+ 
         <Style x:Key="BtnAdd" TargetType="Button">
             <Setter Property="Height" Value="32"/>
             <Setter Property="Padding" Value="14,0"/>
@@ -126,57 +126,16 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
-        <!-- Шапка колонок DataGrid -->
-        <Style TargetType="DataGridColumnHeader">
-            <Setter Property="Background" Value="#B5D5CA"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="FontSize" Value="12"/>
-            <Setter Property="Padding" Value="10,8"/>
-            <Setter Property="BorderThickness" Value="0,0,1,0"/>
-            <Setter Property="BorderBrush" Value="#8FB8A8"/>
-        </Style>
-
-        <!-- Строка DataGrid -->
-        <Style TargetType="DataGridRow">
-            <Setter Property="FontSize" Value="12"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Style.Triggers>
-                <Trigger Property="IsSelected" Value="True">
-                    <Setter Property="Background" Value="#C8E8D8"/>
-                    <Setter Property="Foreground" Value="#1A2A50"/>
-                </Trigger>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#D5ECD5"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
-        <!-- Ячейка DataGrid -->
-        <Style TargetType="DataGridCell">
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="DataGridCell">
-                        <Border Background="{TemplateBinding Background}" Padding="10,0">
-                            <ContentPresenter VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
     </Window.Resources>
 
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="190"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <!--Боковая панель -->
+       
         <Border Background="#B5D5CA" Grid.Column="0">
             <DockPanel>
                 <Button x:Name="btnLogout"
@@ -223,20 +182,20 @@
             </DockPanel>
         </Border>
 
-        <!-- Основная область -->
+    
         <Grid Grid.Column="1" Margin="16">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="60"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <!-- Заголовок -->
+
             <TextBlock x:Name="txtTitle" Text="Автомобили"
                        FontSize="22" FontWeight="Bold" Foreground="#1A2A50"
                        Margin="0,0,0,10" Grid.Row="0"/>
 
-            <!-- Тулбар с поиском -->
+        
             <Border Grid.Row="1" Background="White" CornerRadius="10"
                     BorderBrush="#B5D5CA" BorderThickness="1"
                     Padding="12,8" Margin="0,0,0,10">
@@ -265,7 +224,7 @@
                 </Grid>
             </Border>
 
-            <!-- Мастер-деталь -->
+          
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>

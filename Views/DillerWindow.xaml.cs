@@ -3,7 +3,7 @@ using CarDealerApp.Models;
 
 namespace CarDealerApp.Views
 {
-    // добавления/редактирования дилера
+    
     public partial class DillerEditWindow : Window
     {
         public Diller Diller { get; private set; }
@@ -16,7 +16,7 @@ namespace CarDealerApp.Views
             {
                 Diller = diller;
                 txtTitle.Text = "Редактирование дилера";
-                // заполнение
+              
                 txtName.Text  = diller.Car_center_name;
                 txtPhone.Text = diller.Phone_number;
                 txtEmail.Text = diller.Email;
@@ -29,7 +29,7 @@ namespace CarDealerApp.Views
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            // валидация
+          
             if (string.IsNullOrWhiteSpace(txtName.Text))
             {
                 MessageBox.Show("Введите название центра!", "Ошибка",
@@ -37,7 +37,7 @@ namespace CarDealerApp.Views
                 return;
             }
             
-            // сохранение
+            
             Diller.Car_center_name = txtName.Text.Trim();
             Diller.Phone_number    = txtPhone.Text.Trim();
             Diller.Email           = txtEmail.Text.Trim();

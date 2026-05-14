@@ -12,14 +12,14 @@ namespace CarDealerApp.Services
             using var workbook = new XLWorkbook();
             var worksheet = workbook.Worksheets.Add("Автомобили");
 
-            // Заголовок отчёта
+          
             worksheet.Cell(1, 1).Value = "Автомобили автосалона CarDealer";
             worksheet.Range(1, 1, 1, 7).Merge().Style
                 .Font.SetBold()
                 .Font.SetFontSize(14)
                 .Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
 
-            // Заголовки столбцов
+            
             string[] headers = { "ID", "Марка", "Модель", "Цвет", "Год выпуска", "Цена (₽)", "Тех. характеристики" };
             for (int i = 0; i < headers.Length; i++)
             {
@@ -32,7 +32,8 @@ namespace CarDealerApp.Services
                     .Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
             }
 
-            // Данные
+          
+            
             int startRow = 3;
             for (int i = 0; i < cars.Count; i++)
             {
@@ -46,7 +47,7 @@ namespace CarDealerApp.Services
                 worksheet.Cell(row, 7).Value = cars[i].Technical_specifications;
             }
 
-            // Границы таблицы
+           
             if (cars.Count > 0)
             {
                 var tableRange = worksheet.Range(2, 1, startRow + cars.Count - 1, headers.Length);
@@ -54,25 +55,28 @@ namespace CarDealerApp.Services
                 tableRange.Style.Border.InsideBorder = XLBorderStyleValues.Thin;
             }
 
-            // Автоширина столбцов
+            
             worksheet.Columns().AdjustToContents();
 
             workbook.SaveAs(filePath);
         }
 
+        
+        
+        
         public static void ExportOrders(List<Order> orders, string filePath)
         {
             using var workbook = new XLWorkbook();
             var worksheet = workbook.Worksheets.Add("Заказы");
 
-            // Заголовок отчёта
+           
             worksheet.Cell(1, 1).Value = "Заказы автосалона CarDealer";
             worksheet.Range(1, 1, 1, 6).Merge().Style
                 .Font.SetBold()
                 .Font.SetFontSize(14)
                 .Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
 
-            // Заголовки столбцов
+          
             string[] headers = { "ID заказа", "Клиент", "Автомобиль", "Статус", "Дата исполнения", "Способ оплаты" };
             for (int i = 0; i < headers.Length; i++)
             {
@@ -85,7 +89,7 @@ namespace CarDealerApp.Services
                     .Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
             }
 
-            // Данные
+            
             int startRow = 3;
             for (int i = 0; i < orders.Count; i++)
             {
@@ -98,7 +102,7 @@ namespace CarDealerApp.Services
                 worksheet.Cell(row, 6).Value = orders[i].Payment_method;
             }
 
-            // Границы
+            
             if (orders.Count > 0)
             {
                 var tableRange = worksheet.Range(2, 1, startRow + orders.Count - 1, headers.Length);

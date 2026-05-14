@@ -4,7 +4,7 @@ using CarDealerApp.Models;
 
 namespace CarDealerApp.Views
 {
-    //редактирования/добавления клиента
+    
     public partial class ClientWindow : Window
     {
         public Client Client { get; private set; }
@@ -20,10 +20,11 @@ namespace CarDealerApp.Views
                 Client = client;
                 txtTitle.Text = "Редактирование клиента";
 
-                // заполнение
                 txtName.Text = client.Name;
                 txtSurname.Text = client.Surname;
-                txtMiddleName.Text = client.Middle_name ?? "";
+                txtMiddleName.Text       = client.Middle_name ?? "";
+                txtMiddleName.IsReadOnly = true;   // отчество нельзя менять
+                txtMiddleName.Background = System.Windows.Media.Brushes.LightGray;
                 txtPassportSeries.Text = client.Passport_series.ToString();
                 txtPassportNumber.Text = client.Passport_number;
                 txtPhone.Text = client.Phone_number;
@@ -37,7 +38,7 @@ namespace CarDealerApp.Views
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            // валидация
+           
             if (string.IsNullOrWhiteSpace(txtName.Text))
             {
                 MessageBox.Show("Введите имя!", "Ошибка", 
@@ -73,7 +74,7 @@ namespace CarDealerApp.Views
                 return;
             }
 
-            // сохранение
+            
             Client.Name = txtName.Text.Trim();
             Client.Surname = txtSurname.Text.Trim();
             Client.Middle_name = string.IsNullOrWhiteSpace(txtMiddleName.Text) ? null : txtMiddleName.Text.Trim();

@@ -12,14 +12,14 @@ namespace CarDealerApp.Views
         public Car Car { get; private set; }
         private readonly bool _isEdit;
 
-        // Путь к фото — временно хранится здесь до сохранения
+      
         private string? _selectedPhotoPath;
 
         public CarEditWindow(Car? car = null)
         {
             InitializeComponent();
 
-            // Показываем блок фото только Admin и Employee
+            
             var role = CurrentUser.Role;
             if (role == UserRole.Admin || role == UserRole.Employee)
                 photoPanel.Visibility = Visibility.Visible;
@@ -37,7 +37,7 @@ namespace CarDealerApp.Views
                 txtPrice.Text = car.Price.ToString();
                 txtTech.Text  = car.Technical_specifications;
 
-                // Загружаем существующее фото если есть
+               
                 if (!string.IsNullOrEmpty(car.PhotoPath) && File.Exists(car.PhotoPath))
                 {
                     _selectedPhotoPath = car.PhotoPath;
@@ -50,7 +50,7 @@ namespace CarDealerApp.Views
             }
         }
 
-        // Кнопка выбора фото — открывает диалог
+        
         private void btnChoosePhoto_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new OpenFileDialog
@@ -67,7 +67,7 @@ namespace CarDealerApp.Views
             }
         }
 
-        // Кнопка очистки фото
+       
         private void btnClearPhoto_Click(object sender, RoutedEventArgs e)
         {
             _selectedPhotoPath = null;
@@ -77,7 +77,7 @@ namespace CarDealerApp.Views
             btnClearPhoto.Visibility    = Visibility.Collapsed;
         }
 
-        // Отображает превью фото
+        
         private void ShowPhoto(string path)
         {
             try
@@ -86,7 +86,7 @@ namespace CarDealerApp.Views
                 bitmap.BeginInit();
                 bitmap.UriSource        = new Uri(path, UriKind.Absolute);
                 bitmap.CacheOption      = BitmapCacheOption.OnLoad;
-                // Декодируем до 600px
+                
                 bitmap.DecodePixelWidth = 600;
                 bitmap.EndInit();
 
@@ -97,7 +97,7 @@ namespace CarDealerApp.Views
             }
             catch
             {
-                // Если файл повреждён — показываем заглушку
+                
                 imgPreview.Visibility       = Visibility.Collapsed;
                 photoPlaceholder.Visibility = Visibility.Visible;
                 btnClearPhoto.Visibility    = Visibility.Collapsed;
@@ -106,7 +106,7 @@ namespace CarDealerApp.Views
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            // Валидация
+           
             if (string.IsNullOrWhiteSpace(txtMark.Text))
             {
                 MessageBox.Show("Введите марку!", "Ошибка",
@@ -114,7 +114,7 @@ namespace CarDealerApp.Views
                 return;
             }
 
-            if (!int.TryParse(txtYear.Text, out int year) || year < 1900 || year > DateTime.Now.Year + 1)
+            if (!int.TryParse(txtYear.Text, out int year) || year < 1900 || year > DateTime.Now.Year)
             {
                 MessageBox.Show("Введите корректный год выпуска!", "Ошибка",
                     MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -128,35 +128,8 @@ namespace CarDealerApp.Views
                 return;
             }
 
-            // Если выбрано новое фото — копируем его в папку Photos рядом с exe
-            // чтобы путь был относительным и не ломался при переносе проекта
-            if (_selectedPhotoPath != null && _selectedPhotoPath != Car.PhotoPath)
-            {
-                try
-                {
-                    var photosDir = Path.Combine(
-                        AppDomain.CurrentDomain.BaseDirectory, "Photos");
 
-                    if (!Directory.Exists(photosDir))
-                        Directory.CreateDirectory(photosDir);
-
-                    // Имя файла: Mark_Model_timestamp.ext
-                    var ext      = Path.GetExtension(_selectedPhotoPath);
-                    var fileName = $"{txtMark.Text.Trim()}_{txtModel.Text.Trim()}_{DateTime.Now:yyyyMMdd_HHmmss}{ext}";
-                    var destPath = Path.Combine(photosDir, fileName);
-
-                    File.Copy(_selectedPhotoPath, destPath, overwrite: true);
-                    _selectedPhotoPath = destPath;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Не удалось сохранить фото: {ex.Message}\nАвтомобиль будет сохранён без фото.",
-                        "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    _selectedPhotoPath = null;
-                }
-            }
-
-            // Сохранение данных
+         
             Car.Mark                     = txtMark.Text.Trim();
             Car.Model                    = txtModel.Text.Trim();
             Car.Color                    = txtColor.Text.Trim();

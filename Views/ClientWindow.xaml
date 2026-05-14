@@ -42,7 +42,7 @@
 
             <StackPanel Grid.Row="1" Margin="20,16,20,20">
 
-                <!-- Ряд 1: Фамилия + Имя -->
+                
                 <Grid Margin="0,0,0,10">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -59,11 +59,11 @@
                     </StackPanel>
                 </Grid>
 
-                <!-- Отчество -->
+               
                 <TextBlock Text="ОТЧЕСТВО" Style="{StaticResource FieldLabel}"/>
                 <TextBox x:Name="txtMiddleName" Style="{StaticResource InputBox}" Margin="0,0,0,10"/>
 
-                <!-- Ряд 3: Серия + Номер паспорта -->
+               
                 <Grid Margin="0,0,0,10">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -80,7 +80,7 @@
                     </StackPanel>
                 </Grid>
 
-                <!-- Ряд 4: Телефон + Email -->
+               
                 <Grid Margin="0,0,0,20">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -97,7 +97,7 @@
                     </StackPanel>
                 </Grid>
 
-                <!-- Кнопки -->
+               
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>

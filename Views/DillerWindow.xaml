@@ -42,11 +42,11 @@
 
             <StackPanel Grid.Row="1" Margin="20,16,20,20">
 
-                <!-- Название -->
+               
                 <TextBlock Text="НАЗВАНИЕ ЦЕНТРА" Style="{StaticResource FieldLabel}"/>
                 <TextBox x:Name="txtName" Style="{StaticResource InputBox}" Margin="0,0,0,10"/>
 
-                <!-- Телефон + Email -->
+                
                 <Grid Margin="0,0,0,20">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -63,7 +63,7 @@
                     </StackPanel>
                 </Grid>
 
-                <!-- Кнопки -->
+              
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>

@@ -8,14 +8,12 @@
         Background="#D1EEFC">
 
     <Window.Resources>
-
         <Style x:Key="FieldLabel" TargetType="TextBlock">
             <Setter Property="FontSize" Value="10"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="Foreground" Value="#5A6A8A"/>
             <Setter Property="Margin" Value="0,0,0,3"/>
         </Style>
-
         <Style x:Key="InputBox" TargetType="TextBox">
             <Setter Property="Height" Value="34"/>
             <Setter Property="FontSize" Value="13"/>
@@ -25,7 +23,6 @@
             <Setter Property="BorderBrush" Value="#B5D5CA"/>
             <Setter Property="BorderThickness" Value="1"/>
         </Style>
-
         <Style x:Key="PassBox" TargetType="PasswordBox">
             <Setter Property="Height" Value="34"/>
             <Setter Property="FontSize" Value="13"/>
@@ -35,69 +32,83 @@
             <Setter Property="BorderBrush" Value="#B5D5CA"/>
             <Setter Property="BorderThickness" Value="1"/>
         </Style>
-
     </Window.Resources>
 
-    <!-- Внешняя карточка -->
     <Border Background="White" CornerRadius="12"
             BorderBrush="#B5D5CA" BorderThickness="1"
             Margin="20">
-
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <!-- Синяя шапка -->
             <Border Grid.Row="0" Background="#B5D5CA"
-                    CornerRadius="12,12,0,0"
-                    Padding="20,22">
+                    CornerRadius="12,12,0,0" Padding="20,22">
                 <StackPanel HorizontalAlignment="Center">
                     <TextBlock Text="CarDealer"
                                FontSize="24" FontWeight="Bold"
-                               Foreground="#1A3A28"
-                               HorizontalAlignment="Center"/>
+                               Foreground="#1A3A28" HorizontalAlignment="Center"/>
                     <TextBlock Text="Управление автосалоном"
-                               FontSize="11"
-                               Foreground="#C8E8D8"
-                               HorizontalAlignment="Center"
-                               Margin="0,4,0,0"/>
+                               FontSize="11" Foreground="#3A6A50"
+                               HorizontalAlignment="Center" Margin="0,4,0,0"/>
                 </StackPanel>
             </Border>
 
-            <!-- Тело формы -->
             <StackPanel Grid.Row="1" Margin="28,22,28,24">
 
-                <TextBlock Text="ЛОГИН" Style="{StaticResource FieldLabel}"/>
-                <TextBox x:Name="txtLogin" Style="{StaticResource InputBox}" TabIndex="1"/>
+                <TextBlock Text="EMAIL" Style="{StaticResource FieldLabel}"/>
+                <TextBox x:Name="txtLogin"
+                         Style="{StaticResource InputBox}"
+                         TabIndex="1"/>
 
-                <TextBlock Text="ПАРОЛЬ" Style="{StaticResource FieldLabel}" Margin="0,14,0,3"/>
-                <PasswordBox x:Name="txtPassword" Style="{StaticResource PassBox}" TabIndex="2"/>
+                <TextBlock Text="ПАРОЛЬ" Style="{StaticResource FieldLabel}"
+                           Margin="0,14,0,3"/>
 
-                <!-- Сообщение об ошибке -->
-                <TextBlock x:Name="txtError"
-                           Text=""
-                           Foreground="#C0392B"
-                           FontSize="11"
-                           TextWrapping="Wrap"
-                           HorizontalAlignment="Center"
-                           Margin="0,10,0,0"
-                           Visibility="Collapsed"/>
+                
+                <Grid Height="34">
+                    <PasswordBox x:Name="txtPassword"
+                                 Style="{StaticResource PassBox}"
+                                 Padding="10,0,36,0"
+                                 TabIndex="2"/>
+                    <TextBox x:Name="txtPasswordVisible"
+                             Style="{StaticResource InputBox}"
+                             Padding="10,0,36,0"
+                             Visibility="Collapsed"
+                             TabIndex="2"/>
+                    <Button x:Name="btnShowPassword"
+                            Width="30" Height="30"
+                            HorizontalAlignment="Right" VerticalAlignment="Center"
+                            Margin="0,0,3,0"
+                            Background="Transparent" BorderThickness="0"
+                            Cursor="Hand"
+                            Click="btnShowPassword_Click"
+                            ToolTip="Показать / скрыть пароль">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="Transparent">
+                                    <ContentPresenter HorizontalAlignment="Center"
+                                                      VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                        <TextBlock x:Name="eyeIcon" Text="👁"
+                                   FontSize="15" Foreground="#8A9ABB"
+                                   VerticalAlignment="Center"/>
+                    </Button>
+                </Grid>
 
-                <!-- Войти -->
-                <Button x:Name="btnLogin"
-                        Content="Войти"
-                        Height="38"
-                        Margin="0,18,0,8"
+                <TextBlock x:Name="txtError" Text=""
+                           Foreground="#C0392B" FontSize="11"
+                           TextWrapping="Wrap" HorizontalAlignment="Center"
+                           Margin="0,10,0,0" Visibility="Collapsed"/>
+
+                <Button x:Name="btnLogin" Content="Войти"
+                        Height="38" Margin="0,18,0,8"
                         FontSize="13" FontWeight="SemiBold"
-                        Foreground="#1A3A28"
-                        Background="#B5D5CA"
-                        BorderThickness="0"
-                        Cursor="Hand"
-                        Click="btnLogin_Click"
-                        TabIndex="3"
-                        IsDefault="True">
+                        Foreground="#1A3A28" Background="#B5D5CA"
+                        BorderThickness="0" Cursor="Hand"
+                        Click="btnLogin_Click" TabIndex="3" IsDefault="True">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border x:Name="bd" Background="{TemplateBinding Background}" CornerRadius="8">
@@ -105,35 +116,26 @@
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="bd" Property="Background" Value="#8FB8A8"/>
+                                    <Setter TargetName="bd" Property="Background" Value="#9DC4B8"/>
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
 
-                <!-- Регистрация -->
-                <Button x:Name="btnRegister"
-                        Content="Регистрация"
-                        Height="38"
-                        FontSize="13" FontWeight="SemiBold"
-                        Foreground="#1A3A28"
-                        Background="#D1EEFC"
-                        BorderBrush="#B5D5CA" BorderThickness="1"
-                        Cursor="Hand"
-                        Click="btnRegister_Click"
-                        TabIndex="4">
+                <Button x:Name="btnRegister" Content="Регистрация"
+                        Height="38" FontSize="13" FontWeight="SemiBold"
+                        Foreground="#712B13" Background="#F5C4B3"
+                        BorderThickness="0" Cursor="Hand"
+                        Click="btnRegister_Click" TabIndex="4">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
-                            <Border x:Name="bd" Background="{TemplateBinding Background}"
-                                    CornerRadius="8"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}">
+                            <Border x:Name="bd" Background="{TemplateBinding Background}" CornerRadius="8">
                                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="bd" Property="Background" Value="#B8D8F0"/>
+                                    <Setter TargetName="bd" Property="Background" Value="#E0A898"/>
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
